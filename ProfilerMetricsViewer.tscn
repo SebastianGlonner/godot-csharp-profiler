@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://csharp/ValuesViewerContainer.cs" type="Script" id=1]
+[ext_resource path="res://ProfilerMetricsViewerGraph.tscn" type="PackedScene" id=2]
+
+[node name="ProfilerMetricsViewer" type="Control"]
+margin_left = 10.0
+margin_top = 10.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSplitContainer" type="VSplitContainer" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MetricsGrid" type="GridContainer" parent="HSplitContainer"]
+margin_right = 40.0
+columns = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProfilerMetricsViewerGraph" parent="HSplitContainer" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
