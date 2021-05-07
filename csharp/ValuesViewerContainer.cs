@@ -15,11 +15,12 @@ namespace Efesus.Profiler
 
         private float timePassed = 0;
         private int seconds = 0;
+        private int frameCount = 0;
 
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
-            graphControl = GetTree().GetRoot().FindNode("ProfilerMetricsViewerGraph", true, false) as ProfilerMetricsViewerGraph;
+            graphControl = GetTree().Root.FindNode("ProfilerMetricsViewerGraph", true, false) as ProfilerMetricsViewerGraph;
 
             this.Columns = this.columns;
             ProfilingCollection.NewMetric += NewMetric;
@@ -45,18 +46,24 @@ namespace Efesus.Profiler
 
         public void ProcessGraph(float delta)
         {
-            timePassed += delta;
-            if (timePassed >= 1)
-            {
-                seconds++;
-                Metric metric;
-                if (this.graphControl != null && ProfilingCollection.values.TryGetValue("frame", out metric))
-                {
-                    this.graphControl.addPoint(new Vector2(seconds, (float)metric.currentInterval()));
-                }
 
-                timePassed = 0;
+            Metric metric;
+            if (this.graphControl != null && ProfilingCollection.values.TryGetValue("frame", out metric))
+            {
+                this.graphControl.addPoint(new Vector2(frameCount++, (float)metric.currentInterval()));
             }
+            //timePassed += delta;
+            //if (timePassed >= 1)
+            //{
+            //    seconds++;
+            //    Metric metric;
+            //    if (this.graphControl != null && ProfilingCollection.values.TryGetValue("frame", out metric))
+            //    {
+            //        this.graphControl.addPoint(new Vector2(seconds, (float)metric.currentInterval()));
+            //    }
+
+            //    timePassed = 0;
+            //}
 
         }
 
