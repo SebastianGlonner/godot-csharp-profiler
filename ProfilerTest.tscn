@@ -22,16 +22,16 @@ __meta__ = {
 }
 
 [node name="ProfilerMetricsViewer" parent="UI" instance=ExtResource( 1 )]
-margin_left = 21.2372
-margin_top = 22.181
+margin_left = 20.0
+margin_top = 20.0
 margin_right = 65.2372
 margin_bottom = 36.181
 
 [node name="Button" type="Button" parent="UI"]
-margin_left = 255.0
-margin_top = 130.0
-margin_right = 438.0
-margin_bottom = 182.0
+margin_left = 253.502
+margin_top = 536.177
+margin_right = 436.502
+margin_bottom = 556.177
 text = "Add"
 script = ExtResource( 2 )
 __meta__ = {

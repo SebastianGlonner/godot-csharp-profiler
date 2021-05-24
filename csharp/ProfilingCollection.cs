@@ -16,11 +16,15 @@ namespace Efesus.Profiler
         static public Dictionary<string, Metric> values = new Dictionary<string, Metric>();
 
         static private float timePassed = 0;
+        static private float timeInterval = 1;
 
         static public void ProcessTime(float delta)
         {
+
+            // refactoringCandidate: this wont work correctly if delta > timeInterval
+
             timePassed += delta;
-            if ( timePassed >= 1 )
+            if (timePassed >= timeInterval)
             {
                 foreach (KeyValuePair<string, Metric> entry in ProfilingCollection.values)
                 {

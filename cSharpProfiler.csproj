@@ -55,9 +55,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddTest.cs" />
+    <Compile Include="csharp\GraphColors.cs" />
+    <Compile Include="csharp\graph\GraphBuilder.cs" />
     <Compile Include="csharp\graph\GraphParams.cs" />
+    <Compile Include="csharp\graph\LegendY.cs" />
+    <Compile Include="csharp\graph\Projection.cs" />
     <Compile Include="csharp\ProfileAttribute.cs" />
     <Compile Include="csharp\ProfilingCollection.cs" />
+    <Compile Include="csharp\util\ControlUtil.cs" />
     <Compile Include="csharp\ValuesViewerContainer.cs" />
     <Compile Include="csharp\graph\ProfilerMetricsViewerGraph.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

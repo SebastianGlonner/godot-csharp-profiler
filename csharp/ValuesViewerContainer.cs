@@ -11,10 +11,9 @@ namespace Efesus.Profiler
 
         private int columns = 3;
 
-        private Dictionary<string, Label[]> valueLabels = new Dictionary<string, Label[]>();
+        //private Dictionary<string, Label[]> valueLabels2 = new Dictionary<string, Label[]>();
+        private Dictionary<string, MetricData> valueLabels = new Dictionary<string, MetricData>();
 
-        private float timePassed = 0;
-        private int seconds = 0;
         private int frameCount = 0;
 
         // Called when the node enters the scene tree for the first time.
@@ -33,25 +32,25 @@ namespace Efesus.Profiler
 
             ProfilingCollection.ProcessTime(delta);
 
-            ProcessGraph(delta);
-
             foreach (KeyValuePair<string, Metric> entry in ProfilingCollection.values)
             {
-                var labels = valueLabels[entry.Key];
                 var metric = entry.Value;
-                labels[0].Text = "" + metric.currentSum();
-                labels[1].Text = "" + metric.currentInterval();
+
+                //var labels = valueLabels2[entry.Key];
+                //labels[0].Text = "" + metric.currentSum();
+                //labels[1].Text = "" + metric.currentInterval();
+
+                var metricData = valueLabels[entry.Key];
+                metricData.labels[0].Text = "" + metric.currentSum();
+                metricData.labels[1].Text = "" + metric.currentInterval();
+                this.graphControl.AddMetricPoint(metricData.graphIndex, new Vector2(frameCount, (float)metric.currentInterval()));
             }
+
+            frameCount++;
         }
 
         public void ProcessGraph(float delta)
         {
-
-            Metric metric;
-            if (this.graphControl != null && ProfilingCollection.values.TryGetValue("frame", out metric))
-            {
-                this.graphControl.addPoint(new Vector2(frameCount++, (float)metric.currentInterval()));
-            }
             //timePassed += delta;
             //if (timePassed >= 1)
             //{
@@ -74,13 +73,18 @@ namespace Efesus.Profiler
             int bufferLength = this.columns - 1;
 
             Label[] labels = new Label[bufferLength];
-            Metric[] buffers = new Metric[bufferLength];
             for ( int i = 0; i < bufferLength; i++)
             {
                 labels[i] = this.newAttachedLabel("" + 0);
             }
 
-            valueLabels[args.name] = labels;
+            //valueLabels2[args.name] = labels;
+
+            MetricData data = new MetricData();
+            data.labels = labels;
+            data.graphIndex = this.graphControl.AddMetric();
+            valueLabels[args.name] = data;
+
         }
 
         private Label newAttachedLabel(string name)
@@ -89,6 +93,13 @@ namespace Efesus.Profiler
             newLabel.Text = name;
             AddChild(newLabel);
             return newLabel;
+        }
+
+        private class MetricData
+        {
+            public Label[] labels;
+
+            public int graphIndex;
         }
     }
 }
